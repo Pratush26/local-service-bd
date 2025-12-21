@@ -3,15 +3,15 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import '@/utils/styles/form.css'
-import { signUpSchema, SingUpInput } from "@/schema/LogInSchma"
 import { useState } from "react"
-import { registerUser } from "@/app/actions/User"
 import toast from "react-hot-toast"
+import { SignUpInput, signUpSchema } from "@/schema/userSchma"
+import { registerUser } from "@/app/actions/user"
 
 export default function RegistrationForm() {
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<SingUpInput>({ resolver: zodResolver(signUpSchema) })
-  const formSubmit = async (data: SingUpInput) => {
+  const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<SignUpInput>({ resolver: zodResolver(signUpSchema) })
+  const formSubmit = async (data: SignUpInput) => {
     if (!imageFile) {
       toast.error("Profile photo is required");
       return;
@@ -27,6 +27,11 @@ export default function RegistrationForm() {
       });
 
       const uploadResult = await ImgRes.json();
+      if (!uploadResult?.secure_url) {
+        toast.error("Image upload failure!");
+        return;
+      }
+
       data.photo = uploadResult.secure_url;
       const res = await registerUser(data);
       if (res.success) toast.success(res.message || "Successfully registered user");

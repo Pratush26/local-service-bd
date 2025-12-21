@@ -2,16 +2,16 @@
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LoginInput, loginSchema } from '@/schema/LogInSchma'
 import '@/utils/styles/form.css'
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
+import { SignInInput, signInSchema } from "@/schema/userSchma"
 
 export default function SignInForm() {
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) })
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<SignInInput>({ resolver: zodResolver(signInSchema) })
   const router = useRouter()
-  const formSubmit = async (data: LoginInput) => {
+  const formSubmit = async (data: SignInInput) => {
     try {
       const res = await signIn("credentials", {
         email: data.email,
