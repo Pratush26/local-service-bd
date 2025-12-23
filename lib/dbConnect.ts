@@ -14,7 +14,7 @@ export default async function connectDB(): Promise<void> {
 
   try {
     const db = await mongoose.connect(process.env.DB, {
-      dbName: "Hero-kidzz",
+      dbName: "local-serviceBD",
     });
     connection.isConnected = db.connections[0].readyState;
     

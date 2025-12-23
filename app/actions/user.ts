@@ -1,6 +1,7 @@
 "use server"
-import connectDB from "@/lib/dbConnect"
-import User from "@/models/User"
+
+import connectDB from "@/lib/dbConnect";
+import User from "@/models/User";
 import { signUpSchema } from "@/schema/userSchma";
 import bcrypt from "bcryptjs";
 import z, { ZodError } from "zod";

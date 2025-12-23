@@ -34,7 +34,7 @@ export default function RegistrationForm() {
 
       data.photo = uploadResult.secure_url;
       const res = await registerUser(data);
-      if (res.success) toast.success(res.message || "Successfully registered user");
+      if (res?.success) toast.success(res?.message as string || "Successfully registered user");
       else toast.error(res?.message as string || "Something went wrong!");
       reset();
 
